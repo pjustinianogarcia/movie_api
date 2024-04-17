@@ -16,6 +16,9 @@ let topMovies = [
     { title: 'Dazed and Confused', year: 1993 }
 ];
 
+// static function
+app.use(express.static('public'));
+
 // GET requests
 app.get('/', (req, res) => {
   res.send('Welcome to my movie list!');
