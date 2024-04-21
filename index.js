@@ -33,6 +33,13 @@ app.get('/movies', (req, res) => {
   res.json(topMovies);
 });
 
+
+  // Gets the data about a movie by title
+app.get('/movies/:title', (req, res) => {
+    res.json(topMovies.find(movie => movie.title === req.params.title));
+});
+
+
 //error handling function
 app.use((err, req, res, next) => {
     console.error(err.stack);
