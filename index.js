@@ -5,6 +5,8 @@ mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useU
 
 const Movies = Models.Movie;
 const Users = Models.User;
+const Genres = Models.Genre;
+const Directors = Models.Director;
 
 // import express module to file
 const express = require('express');
@@ -54,8 +56,8 @@ app.get("/movies/:Title", (req, res) => {
 });
 
 //get movie by genres
-app.get("/Genre/:Name", (req, res) => {
-    Genres.findOne({Title: req.params.Title})
+app.get("/genre/:Name", (req, res) => {
+    Genres.findOne({Name: req.params.Name})
     .then((genre) => {
     res.json(genre.Description);
     })
@@ -67,7 +69,7 @@ app.get("/Genre/:Name", (req, res) => {
 
     //get director name
 app.get("/Director/:Name", (req, res) => {
-    Directors.findOne({Title: req.params.Title})
+    Directors.findOne({Name: req.params.Name})
     .then((genre) => {
     res.json(genre.Description);
     })
