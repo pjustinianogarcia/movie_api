@@ -81,7 +81,7 @@ app.get("/directors/:Name", (req, res) => {
 
 
 //add user
-app.post('/users', async (req, res) => {
+app.post("/users", async (req, res) => {
     await Users.findOne({ Username: req.body.Username })
         .then((user) => {
             if (user) {
