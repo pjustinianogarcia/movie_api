@@ -56,22 +56,22 @@ app.get("/movies/:Title", (req, res) => {
 });
 
 //get movie by genres
-app.get("/genre/:Name", (req, res) => {
+app.get("/genres/:Name", async (req, res) => {
     Genres.findOne({Name: req.params.Name})
-    .then((genre) => {
-    res.json(genre.Description);
-    })
-    .catch((err) => {
-    console.error(err);
-    res.status(500).send("Error: " + err);
-    });
-    });
+      .then((genre) => {
+        res.json(genre);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  });
 
     //get director name
-app.get("/Director/:Name", (req, res) => {
+app.get("/directors/:Name", (req, res) => {
     Directors.findOne({Name: req.params.Name})
-    .then((genre) => {
-    res.json(genre.Description);
+    .then((director) => {
+    res.json(director);
     })
     .catch((err) => {
     console.error(err);
@@ -87,14 +87,15 @@ app.post('/users', async (req, res) => {
             if (user) {
                 return res.status(400).send(req.body.Username + 'already exists');
             } else {
-                Users
-                    .create({
+                Users.create({
                         Username: req.body.Username,
+                        Birthdate: req.body.Birthdate,
                         Password: req.body.Password,
                         Email: req.body.Email,
-                        Birthday: req.body.Birthday
+                        
                     })
-                    .then((user) => { res.status(201).json(user) })
+                    .then((user) => { 
+                        res.status(201).json(user) })
                     .catch((error) => {
                         console.error(error);
                         res.status(500).send('Error: ' + error);

@@ -5,32 +5,36 @@ let genreSchema = mongoose.Schema({
   Description: String
 });
 
+let directorSchema = mongoose.Schema({
+  Name: { type: String, required: true },
+      Bio: String,
+      Birth: Date
+});
+
 
 let movieSchema = mongoose.Schema({
     Title: {type: String, required: true},
     Description: {type: String, required: true},
     Genre: { type: mongoose.Schema.Types.ObjectId, ref: 'Genre' },
-    Director: {
-      Name: String,
-      Bio: String,
-      Birth: Date
-    },
+    Director: { type: mongoose.Schema.Types.ObjectId, ref: 'Director' },
     ImagePath: String,
     Featured: Boolean
   });
   
   let userSchema = mongoose.Schema({
     Username: {type: String, required: true},
+    Birthdate: Date,
     Password: {type: String, required: true},
     Email: {type: String, required: true},
-    Birthday: Date,
     FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
   });
-  
+   
+  let Director = mongoose.model('Director', directorSchema);
   let Genre = mongoose.model('Genre', genreSchema);
   let Movie = mongoose.model('Movie', movieSchema);
   let User = mongoose.model('User', userSchema);
-  
+
+  module.exports.Director = Director;
   module.exports.Genre = Genre;
   module.exports.Movie = Movie;
   module.exports.User = User;
