@@ -19,6 +19,8 @@ const uuid = require('uuid');
 // variable to route your HTTP requests and responses
 const app = express();
 
+app.use(express.json());
+
 app.use(morgan('common'));
 
 // static function
@@ -98,14 +100,10 @@ app.post("/users", async (req, res) => {
                         res.status(201).json(user) })
                     .catch((error) => {
                         console.error(error);
-                        res.status(500).send('Error: ' + error);
+                        res.status(500).send('Error creating user: ' + error);
                     })
             }
         })
-        .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error: ' + error);
-        });
 });
 
 
@@ -138,7 +136,7 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
         $push: { FavoriteMovies: req.params.MovieID }
     },
-        { new: true }) // This line makes sure that the updated document is returned
+        { new: true }) 
         .then((updatedUser) => {
             res.json(updatedUser);
         })
@@ -151,7 +149,7 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
 
 // Delete a user by username
 app.delete('/users/:Username', async (req, res) => {
-    await Users.findOneAndRemove({ Username: req.params.Username })
+    await Users.findOneAndDelete({ Username: req.params.Username })
         .then((user) => {
             if (!user) {
                 res.status(400).send(req.params.Username + ' was not found');
