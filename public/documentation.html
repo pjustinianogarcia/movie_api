@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Documentation</title>
 </head>
+
 <body>
     <h1>API Documentation</h1>
 
@@ -33,30 +35,33 @@
             <td>It displays the message: "Welcome to my movie list!"</td>
         </tr>
         <tr>
-        <td>GET</td>
-        <td>/movies</td>
-        <td>Description:
-            This endpoint returns a list of movies available in the movie database. 
-            Query Parameters:
-            This endpoint does not accept any query parameters.
-            
-            Format of Data Expected in the Body:
-            This endpoint does not expect any data in the body of the request.
-            
-            Format of the Response Data:
-            The response will be a JSON array containing movie objects. Each movie object will include details such as title, genre, director, etc.
-        </td>
-        <td>            Example Request: GET /movies
-            Example Response:
-            {
+            <td>GET</td>
+            <td>/movies</td>
+            <td>Description:
+                This endpoint returns a list of movies available in the movie database.
+                Query Parameters:
+                This endpoint does not accept any query parameters.
+
+                Format of Data Expected in the Body:
+                This endpoint does not expect any data in the body of the request.
+
+                Format of the Response Data:
+                The response will be a JSON array containing movie objects. Each movie object will include details such
+                as title, genre, director, etc.
+            </td>
+            <td> Example Request: GET /movies
+                Example Response:
+                {
                 _id: ObjectId('662d9c07d4dc4266bb117b7d'),
                 Title: 'Mean Girls',
-                Description: 'Cady Heron is a hit with the Plastics, an A-list girl clique at her new school. But everything changes when she makes the mistake of falling for Aaron Samuels, the ex-boyfriend of alpha Plastic Regina George.',
+                Description: 'Cady Heron is a hit with the Plastics, an A-list girl clique at her new school. But
+                everything changes when she makes the mistake of falling for Aaron Samuels, the ex-boyfriend of alpha
+                Plastic Regina George.',
                 Genre: ObjectId('663025525625cb72d7117b7b'),
                 Director: ObjectId('663032415625cb72d7117b87'),
                 ImagePath: 'meangirls.png',
                 Featured: false
-              } </td>
+                } </td>
         </tr>
 
         <tr>
@@ -65,24 +70,27 @@
             <td>Description:
                 This endpoint returns details of a specific movie based on its title. Query Parameters:
                 This endpoint does not accept any query parameters.
-                
+
                 Format of Data Expected in the Body:
                 This endpoint does not expect any data in the body of the request.
-                
+
                 Format of the Response Data:
-                The response will be a JSON object containing details of the movie corresponding to the provided title. If no movie is found with the specified title, an empty object {} will be returned.</td>
+                The response will be a JSON object containing details of the movie corresponding to the provided title.
+                If no movie is found with the specified title, an empty object {} will be returned.</td>
             <td>Example Request:
                 GET /movies/Mean%20Girls
                 Example Response (Movie Found):
                 {
-                    _id: ObjectId('662d9c07d4dc4266bb117b7d'),
-                    Title: 'Mean Girls',
-                    Description: 'Cady Heron is a hit with the Plastics, an A-list girl clique at her new school. But everything changes when she makes the mistake of falling for Aaron Samuels, the ex-boyfriend of alpha Plastic Regina George.',
-                    Genre: ObjectId('663025525625cb72d7117b7b'),
-                    Director: ObjectId('663032415625cb72d7117b87'),
-                    ImagePath: 'meangirls.png',
-                    Featured: false
-                  }
+                _id: ObjectId('662d9c07d4dc4266bb117b7d'),
+                Title: 'Mean Girls',
+                Description: 'Cady Heron is a hit with the Plastics, an A-list girl clique at her new school. But
+                everything changes when she makes the mistake of falling for Aaron Samuels, the ex-boyfriend of alpha
+                Plastic Regina George.',
+                Genre: ObjectId('663025525625cb72d7117b7b'),
+                Director: ObjectId('663032415625cb72d7117b87'),
+                ImagePath: 'meangirls.png',
+                Featured: false
+                }
             </td>
         </tr>
         <tr>
@@ -91,16 +99,18 @@
             <td>Description:
                 This endpoint returns details of a specific genre based on its name. Query Parameters:
                 This endpoint does not accept any query parameters.
-                
+
                 Format of Data Expected in the Body:
                 This endpoint does not expect any data in the body of the request.
-                
+
                 Format of the Response Data:
-                The response will be a JSON object containing details of the genre corresponding to the provided name. If no genre is found with the specified name, an empty object {} will be returned.</td>
+                The response will be a JSON object containing details of the genre corresponding to the provided name.
+                If no genre is found with the specified name, an empty object {} will be returned.</td>
             <td>Example Request:
                 GET /genres/Drama
                 Example Response (Genre Found):
-                'Drama Films are serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature.'
+                'Drama Films are serious presentations or stories with settings or life situations that portray
+                realistic characters in conflict with either themselves, others, or forces of nature.'
             </td>
         </tr>
         <tr>
@@ -109,21 +119,22 @@
             <td>Description:
                 This endpoint returns details of a specific director based on their name. Query Parameters:
                 This endpoint does not accept any query parameters.
-                
+
                 Format of Data Expected in the Body:
                 This endpoint does not expect any data in the body of the request.
-                
+
                 Format of the Response Data:
-                The response will be a JSON object containing details of the director corresponding to the provided name. If no director is found with the specified name, an empty object {} will be returned.</td>
+                The response will be a JSON object containing details of the director corresponding to the provided
+                name. If no director is found with the specified name, an empty object {} will be returned.</td>
             <td>Example Request:
                 GET /directors/Tina%Fey
                 Example Response (Director Found):
                 {
-                    _id: ObjectId('663032415625cb72d7117b87'),
-                    Name: 'Tina Fey',
-                    Bio: 'Elizabeth Stamatina "Tina" Fey is an American comedian, actress, writer, and producer.',
-                    Birth: '1970-05-18'
-                  }
+                _id: ObjectId('663032415625cb72d7117b87'),
+                Name: 'Tina Fey',
+                Bio: 'Elizabeth Stamatina "Tina" Fey is an American comedian, actress, writer, and producer.',
+                Birth: '1970-05-18'
+                }
             </td>
         </tr>
     </table>
@@ -142,21 +153,22 @@
             <td>Description:
                 This endpoint returns a list of all users. Query Parameters:
                 This endpoint does not accept any query parameters.
-                
+
                 Format of Data Expected in the Body:
                 This endpoint does not expect any data in the body of the request.
-                
+
                 Format of the Response Data:
-                The response will be a JSON array containing objects representing each user. Each user object will include details such as Username, Birthdate, Email, etc.</td>
+                The response will be a JSON array containing objects representing each user. Each user object will
+                include details such as Username, Birthdate, Email, etc.</td>
             <td>Example Request:
                 {
-                    _id: ObjectId('662aa76a442f7670f5117b7d'),
-                    Username: 'donlothario',
-                    Birthdate: '1980-11-18',
-                    Password: '123abc',
-                    Email: 'don_lothario@email.com',
-                    FavoriteMovie: [ '662a9861df2a2e7540117b88' ]
-                  },
+                _id: ObjectId('662aa76a442f7670f5117b7d'),
+                Username: 'donlothario',
+                Birthdate: '1980-11-18',
+                Password: '123abc',
+                Email: 'don_lothario@email.com',
+                FavoriteMovie: [ '662a9861df2a2e7540117b88' ]
+                },
             </td>
         </tr>
         <tr>
@@ -165,20 +177,21 @@
             <td>Description:
                 This endpoint returns details of a specific user based on their username. Query Parameters:
                 This endpoint does not accept any query parameters.
-                
+
                 Format of Data Expected in the Body:
                 This endpoint does not expect any data in the body of the request.
-                
+
                 Format of the Response Data:
-                The response will be a JSON object containing details of the user corresponding to the provided username. If no user is found with the specified username, an empty object {} will be returned.</td>
+                The response will be a JSON object containing details of the user corresponding to the provided
+                username. If no user is found with the specified username, an empty object {} will be returned.</td>
             <td>Example Request:
                 GET /users/example_user
                 Example Response (User Found):
                 {
-                    "_id": "609b740897aafc001c01e214",
-                    "Username": "example_user",
-                    "Birthdate": "1990-01-01",
-                    "Email": "example@example.com"
+                "_id": "609b740897aafc001c01e214",
+                "Username": "example_user",
+                "Birthdate": "1990-01-01",
+                "Email": "example@example.com"
                 }
             </td>
         </tr>
@@ -189,34 +202,35 @@
             <td>Description:
                 This endpoint is used to create a new user. Query Parameters:
                 This endpoint does not accept any query parameters.
-                
+
                 Format of Data Expected in the Body:
                 The request body should be a JSON object containing the following fields:
-                
+
                 Username: Username of the user (string)
                 Birthdate: Birthdate of the user (string)
                 Password: Password of the user (string)
                 Email: Email address of the user (string)</td>
             <td>Example Request Body:
                 {
-                    "Username": 'ninacaliente',
-                      "Birthdate": '1981-01-30',
-                      "Password": '123abc',
-                      "Email": 'nina_caliente@email.com'
-                    },
+                "Username": 'ninacaliente',
+                "Birthdate": '1981-01-30',
+                "Password": '123abc',
+                "Email": 'nina_caliente@email.com'
+                },
                 Format of the Response Data:
-The response will be a JSON object containing the newly created user's details if the user is successfully created.
-Example Response (User Created):
-{
-    _id: ObjectId('662aa754442f7670f5117b7c'),
-    Username: 'ninacaliente',
-    Birthdate: '1981-01-30',
-    Password: '123abc',
-    Email: 'nina_caliente@email.com'
-  },
-  Example Response (User Already Exists):
-  HTTP Status: 400 Bad Request
-Message: Username already exists
+                The response will be a JSON object containing the newly created user's details if the user is
+                successfully created.
+                Example Response (User Created):
+                {
+                _id: ObjectId('662aa754442f7670f5117b7c'),
+                Username: 'ninacaliente',
+                Birthdate: '1981-01-30',
+                Password: '123abc',
+                Email: 'nina_caliente@email.com'
+                },
+                Example Response (User Already Exists):
+                HTTP Status: 400 Bad Request
+                Message: Username already exists
             </td>
         </tr>
 
@@ -226,42 +240,112 @@ Message: Username already exists
             <td>Description:
                 This endpoint allows a user to add a movie to their list of favorite movies. Query Parameters:
                 This endpoint does not accept any query parameters.
-                
+
                 Format of Data Expected in the Body:
                 This endpoint does not expect any data in the body of the request.
-                
+
                 Format of the Response Data:
-                The response will be a JSON object containing details of the updated user, including the newly added movie to their list of favorite movies.</td>
+                The response will be a JSON object containing details of the updated user, including the newly added
+                movie to their list of favorite movies.</td>
             <td>Example Request:
                 POST /users/example_user/movies/609b740897aafc001c01e214
                 Example Response:
                 {
-                    "_id": "609b740897aafc001c01e214",
-                    "Username": "example_user",
-                    "FavoriteMovies": ["609b740897aafc001c01e214", "609b743f97aafc001c01e215"]
+                "_id": "609b740897aafc001c01e214",
+                "Username": "example_user",
+                "FavoriteMovies": ["609b740897aafc001c01e214", "609b743f97aafc001c01e215"]
                 }
             </td>
         </tr>
+
+        <tr>
+            <td>PUT</td>
+            <td>/users/:Username</td>
+            <td>Description:
+                This endpoint allows users to update their user information including username, password, email, and
+                date of birth. It requires authentication using JWT (JSON Web Tokens) to ensure that only authenticated
+                users can update their own information.
+
+                Query Parameters:
+                This endpoint does not accept any query parameters.
+
+                Format of Data Expected in the Body:
+                The request body should contain JSON data with the updated user information. It should include the
+                following fields:
+
+                Username (optional): New username for the user.
+                Password (optional): New password for the user.
+                Email (optional): New email address for the user.
+                Birthdate (optional): New date of birth for the user.
+                Format of the Response Data:
+                The response will be a JSON object containing details of the updated user, including the updated user
+                information.</td>
+            <td>Example Request:
+                PUT /users/example_user
+                {
+                "Password": "new_password",
+                "Email": "new_email@example.com"
+                }
+                Example Response (User Deleted):
+                {
+                "_id": "609b740897aafc001c01e214",
+                "Username": "example_user",
+                "Email": "new_email@example.com",
+                "Birthdate": "1990-01-01"
+                }
+            </td>
+
+        <tr>
+            <td>DELETE</td>
+            <td>/users/:Username/movies/:MovieID</td>
+            <td>Description:
+                This endpoint allows authenticated users to remove a movie from their list of favorite movies.
+                Authentication is required using JWT (JSON Web Tokens) to ensure that only authorized users can perform
+                this action.
+
+                Query Parameters:
+                This endpoint does not accept any query parameters.
+
+                Format of Data Expected in the Body:
+                This endpoint does not expect any data in the body of the request.
+
+                Format of the Response Data:
+                The response will be a JSON object containing details of the updated user, including the removed movie
+                from the list of favorite movies.</td>
+            <td>Example Request:
+                DELETE /users/example_user/movies/609b740897aafc001c01e214
+                Example Response:
+                {
+                "_id": "609b740897aafc001c01e214",
+                "Username": "example_user",
+                "FavoriteMovies": ["609b740897aafc001c01e215", "609b743f97aafc001c01e216"]
+                }
+            </td>
+        </tr>
+
+
         <tr>
             <td>DELETE</td>
             <td>/users/:Username</td>
             <td>Description:
                 This endpoint allows the deletion of a user by their username. Query Parameters:
                 This endpoint does not accept any query parameters.
-                
+
                 Format of Data Expected in the Body:
                 This endpoint does not expect any data in the body of the request.
-                
+
                 Format of the Response Data:
-                The response will be a text message indicating whether the user was successfully deleted or if the user was not found.</td>
+                The response will be a text message indicating whether the user was successfully deleted or if the user
+                was not found.</td>
             <td>Example Request:
                 DELETE /users/example_user
                 Example Response (User Deleted):
                 HTTP Status: 200 OK
-Message: example_user was deleted.
+                Message: example_user was deleted.
             </td>
         </tr>
-  
+
     </table>
 </body>
+
 </html>
