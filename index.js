@@ -8,16 +8,38 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
 
+
+
 // import express module to file
 const express = require('express');
+const app = express();
 //import morgan
 const morgan = require('morgan');
 //import body-parser
 const bodyParser = require('body-parser');
 //import uuid
 const uuid = require('uuid');
+//import express-validator
+const { check, validationResult } = require('express-validator');
+
+const cors = require('cors');
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
+
+
 // variable to route your HTTP requests and responses
-const app = express();
+
 app.use(express.json());
 
 //const router = express.Router();
@@ -97,6 +119,7 @@ app.get("/directors/:Name", passport.authenticate('jwt', { session: false }), as
 
 //add user
 app.post("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    let hashedPassword = Users.hashPassword(req.body.Password);
     await Users.findOne({ Username: req.body.Username })
         .then((user) => {
             if (user) {
@@ -105,7 +128,7 @@ app.post("/users", passport.authenticate('jwt', { session: false }), async (req,
                 Users.create({
                         Username: req.body.Username,
                         Birthdate: req.body.Birthdate,
-                        Password: req.body.Password,
+                        Password: hashedPassword,
                         Email: req.body.Email,
                         
                     })
@@ -226,6 +249,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 
 
 //listen for requests
-app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
-}); 
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
+});
