@@ -286,7 +286,7 @@
                 "Password": "new_password",
                 "Email": "new_email@example.com"
                 }
-                Example Response (User Deleted):
+                Example Response:
                 {
                 "_id": "609b740897aafc001c01e214",
                 "Username": "example_user",
@@ -342,6 +342,54 @@
                 Example Response (User Deleted):
                 HTTP Status: 200 OK
                 Message: example_user was deleted.
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>POST</td>
+            <td>/login</td>
+            <td>Description:
+                This endpoint is used for user authentication and login. It accepts a username and password in the
+                request body, authenticates the user using Passport's local authentication strategy, and generates a JWT
+                (JSON Web Token) upon successful authentication.
+
+                Format of Data Expected in the Body:
+                Headers: None required
+                Body:
+                Username (string, required): The username of the user attempting to log in.
+                Password (string, required): The password of the user attempting to log in.
+
+                Format of the Response Data:
+                user (object): The authenticated user object.
+                id (string): Unique identifier of the user.
+                Username (string): Username of the authenticated user.
+                Any additional user properties.
+                token (string): JWT token generated for the authenticated user.
+                Example:</td>
+            <td>Example Request:
+                POST /login
+                Content-Type: application/json
+
+                {
+                "Username": "exampleUser",
+                "Password": "examplePassword"
+                }
+
+                Example Response:
+                HTTP/1.1 200 OK
+                Content-Type: application/json
+
+                {
+                "user": {
+                "id": "userId123",
+                "Username": "exampleUser",
+                "email": "user@example.com"
+                // Additional user properties
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+
             </td>
         </tr>
 

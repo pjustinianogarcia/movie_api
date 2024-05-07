@@ -1,6 +1,8 @@
+//import mongoose, bcrypt modules
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+//define schemas
 let genreSchema = mongoose.Schema({
   Name: { type: String, required: true },
   Description: String
@@ -30,6 +32,7 @@ let movieSchema = mongoose.Schema({
     FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
   });
 
+  //hashing
   userSchema.statics.hashPassword = (password) => {
     return bcrypt.hashSync(password, 10);
   };
@@ -38,6 +41,8 @@ let movieSchema = mongoose.Schema({
     return bcrypt.compareSync(password, this.Password);
   };
    
+
+  //export models
   let Director = mongoose.model('Director', directorSchema);
   let Genre = mongoose.model('Genre', genreSchema);
   let Movie = mongoose.model('Movie', movieSchema);

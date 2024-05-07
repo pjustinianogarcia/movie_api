@@ -1,10 +1,13 @@
+//import mongoose
 const mongoose = require('mongoose');
+//import exported models
 const Models = require('./models.js');
 
+//URI
 //mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
+//models
 const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
@@ -24,6 +27,7 @@ const uuid = require('uuid');
 //import express-validator
 const { check, validationResult } = require('express-validator');
 
+// configure CORS
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
@@ -39,23 +43,18 @@ app.use(cors({
 }));
 
 
-
-// variable to route your HTTP requests and responses
-
+//parse request with json
 app.use(express.json());
 
-//const router = express.Router();
-//app.use(router);
 
+//import auth module
 let auth = require('./auth')(app);
 
+//import passport module
 const passport = require('passport');
 require('./passport');
 
-
-
-
-
+//log http request using morgan
 app.use(morgan('common'));
 
 // static function
@@ -65,12 +64,12 @@ app.use(express.static('public'));
 
 
 // GET requests
-
+//get welcome msg
 app.get('/', (req, res) => {
     res.send('Welcome to my movie list!');
 });
 
-// get movies
+// get movies list
 app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Movies.find()
         .then((movies) => {
@@ -82,7 +81,7 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), async (req,
         });
 });
 
-//get movie title
+//get movie by title
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Movies.findOne({ Title: req.params.Title })
         .then((movie) => {
@@ -94,7 +93,7 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), asyn
         });
 });
 
-//get movie by genres
+//get genres by name
 app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Genres.findOne({Name: req.params.Name})
       .then((genre) => {
@@ -106,7 +105,7 @@ app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async
       });
   });
 
-    //get director name
+    //get director by name
 app.get("/directors/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Directors.findOne({Name: req.params.Name})
     .then((director) => {
@@ -117,47 +116,6 @@ app.get("/directors/:Name", passport.authenticate('jwt', { session: false }), as
     res.status(500).send("Error: " + err);
     });
     });
-
-
-//add user
-app.post("/users", 
-//passport.authenticate('jwt', { session: false }), async (req, res) => {
-    [
-        check('Username', 'Username is required').isLength({min: 5}),
-        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-        check('Password', 'Password is required').not().isEmpty(),
-        check('Email', 'Email does not appear to be valid').isEmail()
-      ], async (req, res) => {
-    
-      // check the validation object for errors
-        let errors = validationResult(req);
-    
-        if (!errors.isEmpty()) {
-          return res.status(422).json({ errors: errors.array() });
-        }
-    let hashedPassword = Users.hashPassword(req.body.Password);
-    await Users.findOne({ Username: req.body.Username })
-        .then((user) => {
-            if (user) {
-                return res.status(400).send(req.body.Username + 'already exists');
-            } else {
-                Users.create({
-                        Username: req.body.Username,
-                        Birthdate: req.body.Birthdate,
-                        Password: hashedPassword,
-                        Email: req.body.Email,
-                        
-                    })
-                    .then((user) => { 
-                        res.status(201).json(user) })
-                    .catch((error) => {
-                        console.error(error);
-                        res.status(500).send('Error creating user: ' + error);
-                    })
-            }
-        })
-});
-
 
 // Get all users
 app.get('/users', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -183,6 +141,43 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
         });
 });
 
+//add user
+app.post("/users", 
+//passport.authenticate('jwt', { session: false }), async (req, res) => {
+    [
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+      ], async (req, res) => {
+      
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(422).json({ errors: errors.array() });
+        }
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    await Users.findOne({ Username: req.body.Username })
+        .then((user) => {
+            if (user) {
+                return res.status(400).send(req.body.Username + 'already exists');
+            } else {
+                Users.create({
+                        Username: req.body.Username,
+                        Birthdate: req.body.Birthdate,
+                        Password: hashedPassword,
+                        Email: req.body.Email,
+                    })
+                    .then((user) => { 
+                        res.status(201).json(user) })
+                    .catch((error) => {
+                        console.error(error);
+                        res.status(500).send('Error creating user: ' + error);
+                    })
+            }
+        })
+});
+
+
 // Add a movie to a user's list of favorites
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
@@ -198,6 +193,7 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
         });
 });
 
+//delete a movie from a user's list of favorites
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const { Username, MovieID } = req.params;
 
@@ -209,7 +205,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
             { new: true }
         );
 
-        // If the user is not found, return an error
+        
         if (!user) {
             return res.status(404).send('User not found');
         }
@@ -221,12 +217,13 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
     }
 });
 
+//update users information
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    // CONDITION TO CHECK ADDED HERE
+    
     if(req.user.Username !== req.params.Username){
         return res.status(400).send('Permission denied');
     }
-    // CONDITION ENDS
+    
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
         $set:
         {
@@ -236,7 +233,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), as
             Birthdate: req.body.Birthdate
         }
     },
-        { new: true }) // This line makes sure that the updated document is returned
+        { new: true }) 
         .then((updatedUser) => {
             res.json(updatedUser);
         })
