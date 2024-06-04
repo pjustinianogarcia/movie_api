@@ -29,7 +29,7 @@ const { check, validationResult } = require('express-validator');
 
 // configure CORS
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:3000', 'http://testsite.com'];
 
 app.use(cors({
   origin: (origin, callback) => {
