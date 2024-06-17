@@ -27,6 +27,11 @@ const uuid = require('uuid');
 //import express-validator
 const { check, validationResult } = require('express-validator');
 
+require('dotenv').config()
+const uploadRoute = require('./controller/upload');
+app.use("api/users" , uploadRoute);
+    
+
 // configure CORS
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:1234','https://myflixachv-8f7ac3ab3517.herokuapp.com/'];
