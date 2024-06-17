@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 //import mongoose
 const mongoose = require('mongoose');
 //import exported models
@@ -27,7 +25,7 @@ const bodyParser = require('body-parser');
 //import uuid
 const uuid = require('uuid');
 
-const parser = require('./multer');
+
 
 //import express-validator
 const { check, validationResult } = require('express-validator');
@@ -91,24 +89,7 @@ app.get("/movies", async (req, res) => {
         });
 });
 
-app.post('/movies/:id/image', passport.authenticate('jwt', { session: false }), parser.single('image'), async (req, res) => {
-    const movieId = req.params.id;
-  
-    // Ensure the movie exists
-    const movie = await Movies.findById(movieId);
-    if (!movie) {
-      return res.status(404).send('Movie not found');
-    }
-  
-    // Update the movie's image path
-    movie.ImagePath = req.file.path;
-    await movie.save();
-  
-    res.status(200).json({
-      message: 'Image uploaded successfully',
-      movie: movie
-    });
-  });
+
 
 //get movie by title
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), async (req, res) => {
