@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 //URI
-
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //models
