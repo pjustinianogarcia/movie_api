@@ -76,19 +76,17 @@ app.get('/', (req, res) => {
 
 // get movies list
 app.get("/movies", async (req, res) => {
-    try {
-        const movies = await Movies.find().populate('Genre').populate('Director');
-        console.log("Movies retrieved from DB:", movies); // Detailed logging
-        if (movies.length === 0) {
-            console.log("No movies found");
-            res.status(404).send("No movies found");
-        } else {
-            res.status(200).json(movies);
-        }
-    } catch (err) {
-        console.error("Error retrieving movies:", err);
-        res.status(500).send("Error: " + err);
-    }
+    Movies.find()
+    console.log("Movies found:", movies);
+    //.populate('Genre')
+       // .populate('Director')
+        .then((movies) => {
+            res.status(201).json(movies);
+        })
+        .catch((err) => {
+            console.error("Error retrieving movies:",err);
+            res.status(500).send("Error: " + err);
+        });
 });
 
 
@@ -110,7 +108,7 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), asyn
 });
 
 //get genres by name
-app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get("/genres/:Name", async (req, res) => {
     Genres.findOne({Name: req.params.Name})
       .then((genre) => {
         res.json(genre);
