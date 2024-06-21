@@ -34,7 +34,7 @@ const { check, validationResult } = require('express-validator');
 
 // configure CORS
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:1234','https://myflixachv-8f7ac3ab3517.herokuapp.com/'];
+let allowedOrigins = ['http://localhost:8080','https://myflixachv-8f7ac3ab3517.herokuapp.com/'];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -77,9 +77,8 @@ app.get('/', (req, res) => {
 // get movies list
 app.get("/movies", async (req, res) => {
     Movies.find()
-    console.log("Movies found:", movies);
-    //.populate('Genre')
-       // .populate('Director')
+    .populate('Genre')
+        .populate('Director')
         .then((movies) => {
             res.status(201).json(movies);
         })
@@ -96,8 +95,8 @@ app.get("/movies", async (req, res) => {
 //get movie by title
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Movies.findOne({ Title: req.params.Title })
-    //.populate('Genre')
-       // .populate('Director')
+    .populate('Genre')
+       .populate('Director')
         .then((movie) => {
             res.json(movie);
         })
@@ -108,7 +107,7 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), asyn
 });
 
 //get genres by name
-app.get("/genres/:Name", async (req, res) => {
+app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Genres.findOne({Name: req.params.Name})
       .then((genre) => {
         res.json(genre);
