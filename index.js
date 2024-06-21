@@ -71,7 +71,7 @@ app.use(express.static('public'));
 // GET requests
 //get welcome msg
 app.get('/', (req, res) => {
-    res.send('Welcome to my movie list!');
+    res.send('Welcome to my movies!');
 });
 
 // get movies list
