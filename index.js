@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 //URI
-mongoose.connect('Database URI:',process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //models
 const Movies = Models.Movie;
@@ -71,7 +71,7 @@ app.use(express.static('public'));
 // GET requests
 //get welcome msg
 app.get('/', (req, res) => {
-    res.send('Welcome to my movies!');
+    res.send('Welcome to my movie list!');
 });
 
 // get movies list
