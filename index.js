@@ -6,6 +6,8 @@ const Models = require('./models.js');
 //URI
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+//mongoose.connect('mongodb://localhost:27017/myflixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
 //models
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -77,8 +79,7 @@ app.get('/', (req, res) => {
 // get movies list
 app.get("/movies", async (req, res) => {
     Movies.find()
-    .populate('Genre')
-        .populate('Director')
+    
         .then((movies) => {
             res.status(201).json(movies);
         })
@@ -95,8 +96,7 @@ app.get("/movies", async (req, res) => {
 //get movie by title
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Movies.findOne({ Title: req.params.Title })
-    .populate('Genre')
-       .populate('Director')
+   
         .then((movie) => {
             res.json(movie);
         })
