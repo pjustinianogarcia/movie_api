@@ -74,6 +74,7 @@ app.get('/', (req, res) => {
 
 // get movies list
 app.get("/movies", async (req, res) => {
+    console.log("movies request")
     Movies.find()
     
         .then((movies) => {
