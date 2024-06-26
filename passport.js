@@ -17,6 +17,7 @@ passport.use(
     },
     async (username, password, callback) => {
       console.log(`${username} ${password}`);
+      console.log(await Users.find())
       await Users.findOne({ Username: username })
       .then((user) => {
         if (!user.validatePassword(password)) {
