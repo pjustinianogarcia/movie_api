@@ -26,13 +26,9 @@ const bodyParser = require('body-parser');
 //import uuid
 const uuid = require('uuid');
 
-
-
 //import express-validator
 const { check, validationResult } = require('express-validator');
 
-
-    
 
 // configure CORS
 const cors = require('cors');
