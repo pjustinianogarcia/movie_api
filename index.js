@@ -78,7 +78,8 @@ app.get('/', (req, res) => {
 app.get("/movies", async (req, res) => {
     console.log("movies request")
     Movies.find()
-    
+    .populate('Genre')
+      .populate('Director')
         .then((movies) => {
             res.status(201).json(movies);
         })
