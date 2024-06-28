@@ -63,7 +63,9 @@ app.use(morgan('common'));
 // static function
 app.use(express.static('public'));
 
-
+app.get('/test', (req, res) => {
+    res.send('Server is running');
+  });
 
 
 // GET requests
