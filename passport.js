@@ -8,7 +8,14 @@ let Users = Models.User,
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
-//set up passport to use locastrategy
+/**
+ * Configures Passport to use the LocalStrategy for username and password authentication.
+ * 
+ * @function
+ * @param {string} username - The username of the user attempting to log in.
+ * @param {string} password - The password of the user attempting to log in.
+ * @param {Function} callback - The callback function to handle the result of the authentication.
+ */
 passport.use(
   new LocalStrategy(
     {
@@ -39,7 +46,13 @@ passport.use(
   )
 );
 
-//generates token
+/**
+ * Configures Passport to use JWTStrategy for token-based authentication.
+ * 
+ * @function
+ * @param {Object} jwtPayload - The payload extracted from the JWT.
+ * @param {Function} callback - The callback function to handle the result of the authentication.
+ */
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: 'your_jwt_secret'

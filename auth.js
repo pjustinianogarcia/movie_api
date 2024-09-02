@@ -1,11 +1,20 @@
-
+/**
+ * @module auth
+ * @description This module handles user authentication using JWT (JSON Web Token).
+ */
 const jwtSecret = 'your_jwt_secret'; 
 //import modules
 const jwt = require('jsonwebtoken'),
   passport = require('passport');
 require('./passport');
 
-//generate token
+/**
+ * Generates a JWT token for a user.
+ * 
+ * @function generateJWTToken
+ * @param {Object} user - The user object for which the token is generated.
+ * @returns {string} The generated JWT token.
+ */
 let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
     subject: user.Username, 
@@ -15,7 +24,11 @@ let generateJWTToken = (user) => {
 }
 
 
-/* POST login. */
+/**
+ * POST login route. Authenticates a user and generates a JWT token upon successful login.
+ * 
+ * @param {Object} router - The Express router object.
+ */
 module.exports = (router) => {
   router.post('/login', (req, res) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {

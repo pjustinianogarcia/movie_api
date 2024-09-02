@@ -3,12 +3,17 @@ const mongoose = require('mongoose');
 //import exported models
 const Models = require('./models.js');
 
-//URI
+/**
+ * Connect to the MongoDB URI using Mongoose.
+ * @param {string} process.env.CONNECTION_URI - The connection string for the MongoDB database.
+ */
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //mongoose.connect('mongodb://localhost:27017/myflixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
-//models
+/**
+ * Models representing Movies, Users, Genres, and Directors collections.
+ */
 const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
@@ -16,24 +21,50 @@ const Directors = Models.Director;
 
 
 
-// import express module to file
+/**
+ * Import the Express module.
+ * @module express
+ */
 const express = require('express');
+/**
+ * Create an instance of the Express application.
+ * @const {object} app
+ */
 const app = express();
-//import morgan1`
+/**
+ * Import the Morgan logging middleware.
+ * @module morgan
+ */
 const morgan = require('morgan');
-//import body-parser
+/**
+ * Import the Body-Parser middleware to parse incoming request bodies.
+ * @module body-parser
+ */
 const bodyParser = require('body-parser');
-//import uuid
+/**
+ * Import the UUID library to generate unique identifiers.
+ * @module uuid
+ */
 const uuid = require('uuid');
 
-//import express-validator
+/**
+ * Import the Express-Validator library for request validation.
+ * @module express-validator
+ */
 const { check, validationResult } = require('express-validator');
 
 
-// configure CORS
+/**
+ * Import the CORS middleware to enable Cross-Origin Resource Sharing.
+ * @module cors
+ */
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:1234','http://localhost:4200','https://movie-api-3jxi.onrender.com','https://myflixclientachv3.netlify.app'];
 
+
+/**
+ * Configure CORS to allow requests only from specified origins.
+ */
 app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
@@ -50,7 +81,10 @@ app.use(cors({
 app.use(express.json());
 
 
-//import auth module
+/**
+ * Import the authentication module and initialize it with the Express app.
+ * @module auth
+ */
 let auth = require('./auth')(app);
 
 //import passport module
@@ -62,19 +96,30 @@ app.use(morgan('common'));
 
 // static function
 app.use(express.static('public'));
-
+/**
+ * Test endpoint to check if the server is running.
+ * @route GET /test
+ * @returns {string} - A message indicating the server status.
+ */
 app.get('/test', (req, res) => {
     res.send('Server is running');
   });
 
 
-// GET requests
-//get welcome msg
+/**
+ * Welcome message route.
+ * @route GET /
+ * @returns {string} - A welcome message.
+ */
 app.get('/', (req, res) => {
     res.send('Welcome to my movie list!');
 });
 
-// get movies list
+/**
+ * Get a list of all movies.
+ * @route GET /movies
+ * @returns {object[]} - A list of all movies with their genres and directors populated.
+ */
 app.get("/movies", async (req, res) => {
     console.log("movies request")
     Movies.find()
@@ -89,11 +134,12 @@ app.get("/movies", async (req, res) => {
         });
 });
 
-
-
-
-
-//get movie by title
+/**
+ * Get a movie by its title.
+ * @route GET /movies/:Title
+ * @param {string} Title - The title of the movie.
+ * @returns {object} - The movie object matching the title.
+ */
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Movies.findOne({ Title: req.params.Title })
    
@@ -106,7 +152,12 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), asyn
         });
 });
 
-//get genres by name
+/**
+ * Get a genre by its name.
+ * @route GET /genres/:Name
+ * @param {string} Name - The name of the genre.
+ * @returns {object} - The genre object matching the name.
+ */
 app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Genres.findOne({Name: req.params.Name})
       .then((genre) => {
@@ -118,7 +169,12 @@ app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async
       });
   });
 
-    //get director by name
+/**
+ * Get a director by their name.
+ * @route GET /directors/:Name
+ * @param {string} Name - The name of the director.
+ * @returns {object} - The director object matching the name.
+ */
 app.get("/directors/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     Directors.findOne({Name: req.params.Name})
     .then((director) => {
@@ -130,7 +186,11 @@ app.get("/directors/:Name", passport.authenticate('jwt', { session: false }), as
     });
     });
 
-// Get all users
+/**
+ * Get a list of all users.
+ * @route GET /users
+ * @returns {object[]} - A list of all users.
+ */
 app.get('/users', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Users.find()
         .then((users) => {
@@ -142,7 +202,12 @@ app.get('/users', passport.authenticate('jwt', { session: false }), async (req, 
         });
 });
 
-// Get a user by username
+/**
+ * Get a user by their username.
+ * @route GET /users/:Username
+ * @param {string} Username - The username of the user.
+ * @returns {object} - The user object matching the username.
+ */
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Users.findOne({ Username: req.params.Username })
         .then((user) => {
@@ -154,7 +219,15 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
         });
 });
 
-//add user
+/**
+ * Register a new user.
+ * @route POST /users
+ * @param {string} Username - The username of the new user.
+ * @param {string} Password - The password of the new user.
+ * @param {string} Email - The email of the new user.
+ * @param {string} Birthdate - The birthdate of the new user.
+ * @returns {object} - The created user object.
+ */
 app.post("/users", 
 //passport.authenticate('jwt', { session: false }), async (req, res) => {
     [
