@@ -64,6 +64,7 @@ let allowedOrigins = [
   "http://localhost:4200",
   "https://movie-api-3jxi.onrender.com",
   "https://myflixclientachv3.netlify.app",
+  "https://pjustinianogarcia.github.io",
 ];
 
 /**
