@@ -25,7 +25,7 @@ To test the API using Postman, you need to create a user first.
 
 After creating a user or logging in, you will receive a response similar to the following:
 
-```json
+
 {
     "user": {
         "_id": "6769a665bfe591cc1cd950f8",
@@ -82,8 +82,8 @@ This application is built using the following technologies:
 Movies
 - Get all movies: GET /movies
 - Get a movie by title: GET /movies/:title
-- Get movies by genre: GET /movies/Genre/:GenreName
-- Get a director by name: GET /Director/:DirectorName
+- Get movies by genre: GET /movies/genres/:GenreName
+- Get a director by name: GET /directors/:DirectorName
 
 Users
 - Create a user: POST /users
